@@ -1,4 +1,4 @@
-package tapkomet.spring.controlers.v1;
+package tapkomet.spring.controllers.v1;
 
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;

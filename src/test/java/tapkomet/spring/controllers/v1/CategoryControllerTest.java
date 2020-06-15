@@ -1,4 +1,4 @@
-package tapkomet.spring.controlers.v1;
+package tapkomet.spring.controllers.v1;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +22,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Created by Tapkomet on 6/11/2020
+ */
 public class CategoryControllerTest {
 
     public static final String NAME = "Jim";

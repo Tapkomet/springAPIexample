@@ -6,6 +6,9 @@ import tapkomet.spring.domain.Category;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Created by Tapkomet on 6/11/2020
+ */
 public class CategoryMapperTest {
 
     public static final String NAME = "Joe";
