@@ -6,6 +6,8 @@ import org.mapstruct.factory.Mappers;
 import tapkomet.spring.api.v1.model.CustomerDTO;
 import tapkomet.spring.domain.Customer;
 
+import static tapkomet.spring.controllers.v1.CustomerController.CUSTOMER_BASE_URL;
+
 /**
  * Created by Tapkomet on 6/11/2020
  */
@@ -20,9 +22,8 @@ public interface CustomerMapper {
     @Mapping(target = "id", ignore = true)
     Customer customerDTOToCustomer(CustomerDTO customerDTO);
 
-    String URL_BASE = "/api/v1/customers/";
 
     default String urlGenerator(Long id) {
-        return URL_BASE + id.toString();
+        return CUSTOMER_BASE_URL + "/" + id.toString();
     }
 }

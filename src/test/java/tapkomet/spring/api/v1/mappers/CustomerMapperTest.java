@@ -2,6 +2,7 @@ package tapkomet.spring.api.v1.mappers;
 
 import org.junit.Test;
 import tapkomet.spring.api.v1.model.CustomerDTO;
+import tapkomet.spring.controllers.v1.CustomerController;
 import tapkomet.spring.domain.Customer;
 
 import static org.junit.Assert.assertEquals;
@@ -14,6 +15,8 @@ public class CustomerMapperTest {
     public static final String FIRST_NAME = "Joe";
     public static final String LAST_NAME = "Cotton-Eye";
     public static final long ID = 1L;
+
+    public static final String URL_BASE = CustomerController.CUSTOMER_BASE_URL + "/";
 
     CustomerMapper customerMapper = CustomerMapper.INSTANCE;
 
@@ -32,7 +35,7 @@ public class CustomerMapperTest {
         //then
         assertEquals(FIRST_NAME, customerDTO.getFirstname());
         assertEquals(LAST_NAME, customerDTO.getLastname());
-        assertEquals(CustomerMapper.URL_BASE + ID, customerDTO.getCustomer_url());
+        assertEquals(URL_BASE + ID, customerDTO.getCustomer_url());
     }
 
 }

@@ -6,6 +6,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import tapkomet.spring.api.v1.mappers.CustomerMapper;
 import tapkomet.spring.api.v1.model.CustomerDTO;
+import tapkomet.spring.controllers.v1.CustomerController;
 import tapkomet.spring.domain.Customer;
 import tapkomet.spring.repositories.CustomerRepository;
 
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Tapkomet on 6/11/2020
@@ -28,18 +29,20 @@ public class CustomerServiceImplTest {
     public static final long ID2 = 2L;
     CustomerService customerService;
 
+    public static final String URL_BASE = CustomerController.CUSTOMER_BASE_URL + "/";
+
     @Mock
     CustomerRepository customerRepository;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
         customerService = new CustomerServiceImpl(CustomerMapper.INSTANCE, customerRepository);
     }
 
     @Test
-    public void getAllCustomers() throws Exception {
+    public void getAllCustomers() {
 
         Customer customer1 = new Customer();
         customer1.setId(ID);
@@ -60,7 +63,7 @@ public class CustomerServiceImplTest {
     }
 
     @Test
-    public void getCustomerById() throws Exception {
+    public void getCustomerById() {
 
         //given
         Customer customer = new Customer();
@@ -76,7 +79,7 @@ public class CustomerServiceImplTest {
         //then
         assertEquals(FIRST_NAME, customerDTO.getFirstname());
         assertEquals(LAST_NAME, customerDTO.getLastname());
-        assertEquals(CustomerMapper.URL_BASE + ID, customerDTO.getCustomer_url());
+        assertEquals(URL_BASE + ID, customerDTO.getCustomer_url());
 
     }
 
@@ -99,7 +102,7 @@ public class CustomerServiceImplTest {
 
         //then
         assertEquals(customerDTO.getFirstname(), savedDTO.getFirstname());
-        assertEquals(CustomerMapper.URL_BASE + ID, savedDTO.getCustomer_url());
+        assertEquals(URL_BASE + ID, savedDTO.getCustomer_url());
     }
 
     @Test
@@ -122,7 +125,13 @@ public class CustomerServiceImplTest {
 
         //then
         assertEquals(customerDTO.getFirstname(), savedDTO.getFirstname());
-        assertEquals(CustomerMapper.URL_BASE + ID, savedDTO.getCustomer_url());
+        assertEquals(URL_BASE + ID, savedDTO.getCustomer_url());
+    }
 
+    @Test
+    public void deleteCustomerById() {
+        customerRepository.deleteById(ID);
+
+        verify(customerRepository, times(1)).deleteById(anyLong());
     }
 }

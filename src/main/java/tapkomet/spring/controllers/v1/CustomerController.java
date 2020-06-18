@@ -8,13 +8,17 @@ import tapkomet.spring.api.v1.model.CustomerDTO;
 import tapkomet.spring.api.v1.model.CustomerListDTO;
 import tapkomet.spring.services.CustomerService;
 
+import static tapkomet.spring.controllers.v1.CustomerController.CUSTOMER_BASE_URL;
+
+
 /**
  * Created by Tapkomet on 6/11/2020
  */
-@Controller
-@RequestMapping("/api/v1/customers")
+@RestController
+@RequestMapping(CUSTOMER_BASE_URL)
 public class CustomerController {
 
+    public static final String CUSTOMER_BASE_URL = "/api/v1/customers";
     private final CustomerService customerService;
 
     public CustomerController(CustomerService customerService) {
@@ -22,28 +26,40 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<CustomerListDTO> getAllCustomers() {
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerListDTO getAllCustomers() {
 
-        return new ResponseEntity<CustomerListDTO>
-                (new CustomerListDTO(customerService.getAllCustomers()), HttpStatus.OK);
+        return new CustomerListDTO(customerService.getAllCustomers());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerDTO getCustomerById(@PathVariable Long id) {
 
-        return new ResponseEntity<CustomerDTO>
-                (customerService.getCustomerById(id), HttpStatus.OK);
+        return customerService.getCustomerById(id);
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDTO> createNewCustomer(@RequestBody CustomerDTO customerDTO) {
-        return new ResponseEntity<CustomerDTO>(customerService.createCustomer(customerDTO),
-                HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public CustomerDTO createNewCustomer(@RequestBody CustomerDTO customerDTO) {
+        return customerService.createCustomer(customerDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerDTO> updateCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable Long id) {
-        return new ResponseEntity<CustomerDTO>(customerService.updateCustomer(customerDTO, id),
-                HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerDTO updateCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable Long id) {
+        return customerService.updateCustomer(customerDTO, id);
+    }
+
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerDTO patchCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable Long id) {
+        return customerService.patchCustomer(customerDTO, id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteCustomerById(@PathVariable Long id) {
+        customerService.deleteCustomerById(id);
     }
 }
